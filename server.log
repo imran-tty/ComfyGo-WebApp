@@ -1,0 +1,59 @@
+Access is denied.
+h for changes in these directories: ['C:\\ComfyGoWebsite2\\backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [4416] using WatchFiles
+INFO:     Started server process [440]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63145 - "GET /api/health HTTP/1.1" 200 OK
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "C:\Users\USER\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     127.0.0.1:63150 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63156 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63158 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63160 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63215 - "OPTIONS /api/auth/signup/tourist HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "POST /api/auth/signup/tourist HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63215 - "OPTIONS /api/tourist/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63218 - "OPTIONS /api/tourist/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63218 - "OPTIONS /api/tourist/transports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63215 - "OPTIONS /api/tourist/hotels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63218 - "OPTIONS /api/tourist/guides HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63215 - "OPTIONS /api/tourist/bookings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63218 - "OPTIONS /api/tourist/packages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63215 - "OPTIONS /api/tourist/my-package HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/hotels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/guides HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/bookings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63220 - "GET /api/tourist/transports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/packages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/transports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/hotels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/guides HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/bookings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63219 - "GET /api/tourist/packages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63220 - "GET /api/tourist/my-package HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63220 - "GET /api/tourist/my-package HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63235 - "PUT /api/tourist/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63235 - "GET /api/tourist/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63239 - "GET /api/tourist/guides HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63235 - "GET /api/tourist/transports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63238 - "GET /api/tourist/hotels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63239 - "GET /api/tourist/packages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63235 - "GET /api/tourist/my-package HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63240 - "GET /api/tourist/bookings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64047 - "OPTIONS /api/auth/logout HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64051 - "POST /api/auth/logout HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64049 - "OPTIONS /api/public/destinations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64053 - "GET /api/public/destinations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64053 - "GET /api/public/destinations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64691 - "OPTIONS /api/public/destinations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64692 - "OPTIONS /api/public/destinations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64696 - "GET /api/public/destinations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64696 - "GET /api/public/destinations HTTP/1.1" 200 OK
