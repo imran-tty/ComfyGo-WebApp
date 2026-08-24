@@ -1,0 +1,282 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#register_page_bg {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 55% 45% at 5% 15%, rgba(134, 208, 111, 0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 55% at 95% 85%, rgba(38, 198, 170, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 85% 8%, rgba(255, 213, 79, 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 40% at 15% 90%, rgba(129, 199, 132, 0.2) 0%, transparent 55%),
+    linear-gradient(145deg, #f0faf2 0%, #e8f8f0 40%, #e0f7f4 75%, #f5fde8 100%);
+}
+
+#register_hero {
+  padding: 56px 40px 20px;
+  text-align: center;
+}
+
+#register_tag {
+  font-size: 0.71rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2e7d32;
+  margin-bottom: 12px;
+}
+
+#register_title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: #1b3a2a;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+#register_title em {
+  font-style: italic;
+  color: #388e3c;
+}
+
+#register_sub {
+  font-size: 0.95rem;
+  color: #4a7060;
+}
+
+#register_wrapper {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+#role_selector {
+  margin-bottom: 20px;
+}
+
+#role_label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #3a6648;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+#role_cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.role_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 18px 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1.5px solid rgba(104, 185, 120, 0.3);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.18s;
+}
+
+.role_card input[type="radio"] {
+  display: none;
+}
+
+.role_card:hover {
+  border-color: #43a856;
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 142, 60, 0.14);
+}
+
+.role_card.active {
+  border-color: #43a856;
+  border-width: 2px;
+  background: rgba(232, 248, 234, 0.95);
+  box-shadow: 0 4px 16px rgba(56, 142, 60, 0.18);
+}
+
+.role_title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1b3a2a;
+}
+
+.role_desc {
+  font-size: 0.73rem;
+  color: #5a7a60;
+  line-height: 1.4;
+}
+
+#register_card {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(104, 185, 120, 0.3);
+  border-top: 3px solid #43a856;
+  border-radius: 20px;
+  padding: 36px 34px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 8px 40px rgba(56, 142, 60, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+#form_error {
+  padding: 11px 15px;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  color: #b91c1c;
+  margin-bottom: 18px;
+}
+
+#form_success {
+  padding: 11px 15px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  color: #15803d;
+  margin-bottom: 18px;
+}
+
+#register_form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.role_form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reg_field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reg_field label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #3a6648;
+}
+
+.reg_field input {
+  width: 100%;
+  padding: 11px 15px;
+  border: 1.5px solid rgba(104, 185, 120, 0.35);
+  border-radius: 10px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  color: #1b3a2a;
+  background: rgba(240, 250, 242, 0.8);
+  outline: none;
+  transition: border-color 0.22s, box-shadow 0.22s, background 0.2s;
+}
+
+.reg_field input::placeholder {
+  color: #90b89a;
+}
+
+.reg_field input:focus {
+  border-color: #43a856;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(67, 168, 86, 0.13);
+}
+
+#register_submit {
+  width: 100%;
+  padding: 13px;
+  margin-top: 6px;
+  background: linear-gradient(135deg, #43a856 0%, #2e7d32 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba(56, 142, 60, 0.32);
+}
+
+#register_submit:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 26px rgba(56, 142, 60, 0.4);
+}
+
+#register_submit:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+#signin_text {
+  text-align: center;
+  font-size: 0.86rem;
+  color: #5a7a60;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(104, 185, 120, 0.25);
+}
+
+#signin_link {
+  color: #2e7d32;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#signin_link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  #register_hero {
+    padding: 44px 20px 16px;
+  }
+
+  #register_wrapper {
+    padding: 20px 16px 60px;
+  }
+
+  #register_card {
+    padding: 28px 20px;
+  }
+
+  #role_cards {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .role_card {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    gap: 12px;
+    text-align: left;
+  }
+}

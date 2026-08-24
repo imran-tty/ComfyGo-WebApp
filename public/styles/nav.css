@@ -1,0 +1,240 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#navbaar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background: gradient(135deg, #f5f7f9, #c3cfe2);
+  padding: 0 36px;
+  height: 72px;
+  border-radius: 4px;
+  border-top: 3px solid #5a7a4a;
+  border-bottom: 1px solid rgba(90, 122, 74, 0.2);
+  border-left: 1px solid rgba(90, 122, 74, 0.12);
+  border-right: 1px solid rgba(90, 122, 74, 0.12);
+  box-shadow:
+    0 4px 24px rgba(90, 122, 74, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  box-sizing: border-box;
+}
+
+#comfygo_logo {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 35px;
+  color: #2c3e23;
+  text-decoration: none;
+  letter-spacing: 0.8px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+#comfygo_logo:hover {
+  color: #5a7a4a;
+}
+
+#nav_sec_1,#nav_sec_2,#nav_sec_3 {
+  display: flex;
+  align-items: center;
+}
+#nav_sec_2 {
+  gap: 4px;
+}
+#nav_sec_3 {
+  gap: 10px;
+}
+
+#nav_about,#nav_contact {
+  font-family: "Jost", sans-serif;
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #4a5e3a;
+  text-decoration: none;
+  padding: 8px 18px;
+  position: relative;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+#nav_about::after,#nav_contact::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 18px;
+  width: 0;
+  height: 1.5px;
+  background: #5a7a4a;
+  transition: width 0.25s ease;
+}
+#nav_about:hover,#nav_contact:hover {
+  color: #2c3e23;
+}
+#nav_about:hover::after,#nav_contact:hover::after {
+  width: calc(100% - 36px);
+}
+
+#nav_login {
+  font-family: "Jost", sans-serif;
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #5a7a4a;
+  text-decoration: none;
+  padding: 8px 18px;
+  border: 1px solid rgba(90, 122, 74, 0.4);
+  border-radius: 3px;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+  white-space: nowrap;
+}
+#nav_login:hover {
+  background: rgba(90, 122, 74, 0.07);
+  border-color: #5a7a4a;
+  color: #2c3e23;
+}
+
+#nav_signup {
+  font-family: "Jost", sans-serif;
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fafaf7;
+  text-decoration: none;
+  padding: 8px 22px;
+  background: #3d5c2e;
+  border: 1px solid #3d5c2e;
+  border-radius: 3px;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  white-space: nowrap;
+}
+#nav_signup:hover {
+  background: #2c3e23;
+  box-shadow: 0 4px 14px rgba(60, 90, 46, 0.25);
+}
+
+#nav_toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 100;
+  font-size: 22px;
+  color: #1a1a1a;
+  transition: color 0.2s;
+}
+#nav_toggle:hover {
+  color: #3d5c2e;
+}
+#navbaar.open #nav_toggle .fa-bars {
+  display: none;
+}
+#navbaar.open #nav_toggle::after {
+  content: '\f00d';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 22px;
+  color: #1a1a1a;
+}
+
+@media (min-width: 1200px) {
+  #navbaar {
+    padding: 0 56px;
+  }
+  #comfygo_logo {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  #navbaar {
+    padding: 0 24px;
+  }
+  #nav_about,
+  #nav_contact {
+    padding: 8px 12px;
+    letter-spacing: 1.2px;
+  }
+  #nav_login {
+    padding: 8px 14px;
+  }
+  #nav_signup {
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  #navbaar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 16px 20px;
+    border-radius: 0;
+    gap: 0;
+  }
+  #nav_sec_1 {
+    flex: 1;
+  }
+  #nav_toggle {
+    display: flex;
+  }
+  #nav_sec_2,
+  #nav_sec_3 {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 0 4px;
+    border-top: 1px solid rgba(90, 122, 74, 0.15);
+    margin-top: 12px;
+  }
+  #navbaar.open #nav_sec_2,
+  #navbaar.open #nav_sec_3 {
+    display: flex;
+  }
+  #nav_about,
+  #nav_contact {
+    font-size: 13px;
+    padding: 10px 4px;
+    letter-spacing: 1.5px;
+    width: 100%;
+  }
+  #nav_sec_3 {
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 12px;
+    border-top: none;
+    margin-top: 0;
+    gap: 10px;
+  }
+  #nav_login,
+  #nav_signup {
+    font-size: 12.5px;
+    padding: 9px 16px;
+    flex: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  #comfygo_logo {
+    font-size: 19px;
+  }
+  #nav_login,
+  #nav_signup {
+    font-size: 11.5px;
+    padding: 8px 10px;
+  }
+}

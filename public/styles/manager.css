@@ -1,0 +1,389 @@
+/* ── manager.css ── mirrors the structure of guide.css ── */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f5f4f0;
+    color: #1a1a1a;
+}
+
+/* ─── PAGE WRAPPER ─── */
+#manager_page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── TOP BAR ─── */
+#manager_topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 2.5rem 3rem 2rem;
+    background: #fff;
+    border-bottom: 1px solid #e8e5de;
+    gap: 1rem;
+}
+
+#manager_welcome_tag {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9b7f4e;
+    margin-bottom: 0.35rem;
+}
+
+#manager_welcome_name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.2rem;
+}
+
+#manager_welcome_id {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+#manager_logout_btn {
+    margin-top: 0.4rem;
+    padding: 0.55rem 1.4rem;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+#manager_logout_btn:hover {
+    background: #9b7f4e;
+}
+
+/* ─── ALERTS ─── */
+.m_alert {
+    margin: 1.2rem 3rem 0;
+    padding: 0.85rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.m_alert_error {
+    background: #fdecea;
+    color: #c0392b;
+    border: 1px solid #f5c6c2;
+}
+
+.m_alert_success {
+    background: #eafaf1;
+    color: #1e8449;
+    border: 1px solid #b7e4c7;
+}
+
+/* ─── BODY LAYOUT ─── */
+#manager_body {
+    display: flex;
+    flex: 1;
+    gap: 0;
+}
+
+/* ─── SIDEBAR ─── */
+#manager_sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 1px solid #e8e5de;
+    padding: 2rem 0;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 110px);
+    overflow-y: auto;
+}
+
+#manager_nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0 1rem;
+}
+
+.m_nav_link {
+    display: block;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s;
+}
+
+.m_nav_link:hover {
+    background: #f5f4f0;
+    color: #9b7f4e;
+}
+
+/* ─── MAIN CONTENT ─── */
+#manager_content {
+    flex: 1;
+    padding: 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    overflow-y: auto;
+}
+
+/* ─── SECTIONS ─── */
+.m_section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem 2.2rem;
+    border: 1px solid #e8e5de;
+}
+
+.m_section_title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.3rem;
+}
+
+.m_section_sub {
+    font-size: 0.88rem;
+    color: #888;
+    margin-bottom: 1.6rem;
+}
+
+.m_sub_heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #9b7f4e;
+    margin-bottom: 1rem;
+}
+
+/* ─── INFO GRID ─── */
+.m_info_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1rem;
+}
+
+.m_info_card {
+    background: #faf9f6;
+    border: 1px solid #ede9e0;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+}
+
+.m_info_label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 0.4rem;
+}
+
+.m_info_value {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    word-break: break-word;
+}
+
+/* ─── TABLE ─── */
+.m_table_wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #e8e5de;
+}
+
+.m_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.m_table thead {
+    background: #faf9f6;
+}
+
+.m_table th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #888;
+    border-bottom: 1px solid #e8e5de;
+}
+
+.m_table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f0ede6;
+    color: #333;
+}
+
+.m_table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.m_table tbody tr:hover {
+    background: #faf9f6;
+}
+
+.m_badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: #f0ede6;
+    color: #9b7f4e;
+    text-transform: capitalize;
+}
+
+/* ─── EMPTY STATE ─── */
+.m_empty {
+    font-size: 0.92rem;
+    color: #aaa;
+    padding: 1rem 0;
+}
+
+/* ─── FORM FIELDS ─── */
+.m_field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-bottom: 1.2rem;
+    max-width: 480px;
+}
+
+.m_field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.m_field input,
+.m_field select {
+    padding: 0.7rem 1rem;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem;
+    color: #1a1a1a;
+    background: #faf9f6;
+    transition: border-color 0.18s;
+    outline: none;
+}
+
+.m_field input:focus,
+.m_field select:focus {
+    border-color: #9b7f4e;
+    background: #fff;
+}
+
+/* ─── SUBMIT BUTTON ─── */
+.m_btn_primary {
+    margin-top: 0.5rem;
+    padding: 0.75rem 2rem;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.m_btn_primary:hover {
+    background: #9b7f4e;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+    #manager_topbar {
+        padding: 1.8rem 1.5rem 1.4rem;
+    }
+
+    #manager_content {
+        padding: 1.8rem 1.5rem;
+    }
+
+    #manager_sidebar {
+        display: none;
+    }
+
+    /* collapse on mobile */
+}
+
+@media (max-width: 600px) {
+    #manager_topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .m_info_grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ─── APPROVAL BUTTONS ─── */
+.m_btn_approve {
+    padding: 0.45rem 1rem;
+    background: #1e8449;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.m_btn_approve:hover {
+    background: #27ae60;
+}
+
+.m_btn_reject {
+    padding: 0.45rem 1rem;
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.m_btn_reject:hover {
+    background: #e74c3c;
+}
+
+.m_table td form {
+    display: inline-block;
+    margin: 0 2px;
+}
