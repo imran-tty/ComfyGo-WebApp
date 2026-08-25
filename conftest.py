@@ -13,7 +13,7 @@ import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-# Override settings BEFORE importing anything from app
+
 import os
 
 os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///:memory:"
@@ -36,19 +36,12 @@ from app.models.models import (
     UserPackage,
 )
 
-# ---------------------------------------------------------------------------
-# Async engine & session
-# ---------------------------------------------------------------------------
 
 TEST_DB_URL = "sqlite+aiosqlite:///:memory:"
 
 engine = create_async_engine(TEST_DB_URL, echo=False)
 TestSessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-
-# ---------------------------------------------------------------------------
-# Database setup / teardown (per test, function-scoped)
-# ---------------------------------------------------------------------------
 
 @pytest_asyncio.fixture(autouse=True)
 async def setup_and_teardown():
@@ -60,10 +53,6 @@ async def setup_and_teardown():
         await conn.run_sync(Base.metadata.drop_all)
 
 
-# ---------------------------------------------------------------------------
-# Database session override
-# ---------------------------------------------------------------------------
-
 async def _override_get_db():
     async with TestSessionLocal() as session:
         try:
@@ -73,10 +62,6 @@ async def _override_get_db():
             await session.rollback()
             raise
 
-
-# ---------------------------------------------------------------------------
-# Async HTTP client
-# ---------------------------------------------------------------------------
 
 @pytest_asyncio.fixture
 async def client() -> AsyncGenerator[AsyncClient, None]:
@@ -88,20 +73,12 @@ async def client() -> AsyncGenerator[AsyncClient, None]:
     app.dependency_overrides.clear()
 
 
-# ---------------------------------------------------------------------------
-# Helper to create a DB session directly (for seeding)
-# ---------------------------------------------------------------------------
-
 @pytest_asyncio.fixture
 async def db_session() -> AsyncGenerator[AsyncSession, None]:
     """Provide a raw async session for direct DB operations in tests."""
     async with TestSessionLocal() as session:
         yield session
 
-
-# ---------------------------------------------------------------------------
-# Seed data factories
-# ---------------------------------------------------------------------------
 
 @pytest_asyncio.fixture
 async def seed_user(db_session: AsyncSession) -> User:
@@ -274,10 +251,6 @@ async def seed_package(db_session: AsyncSession) -> Package:
     await db_session.commit()
     return pkg
 
-
-# ---------------------------------------------------------------------------
-# Auth helpers
-# ---------------------------------------------------------------------------
 
 @pytest_asyncio.fixture
 async def auth_token_tourist(client: AsyncClient, seed_user: User) -> str:

@@ -5,8 +5,8 @@ Generates proper bcrypt hashes and populates PostgreSQL with sample data.
 
 Usage:
     cd backend
-    python seed.py                    # seed with default passwords
-    python seed.py --drop             # drop all tables first, then seed
+    python seed.py
+    python seed.py --drop
     python seed.py --db-url postgresql+asyncpg://user:pass@host:5432/dbname
 
 Default credentials after seeding:
@@ -24,19 +24,14 @@ from datetime import date, datetime
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-# ── Password hashing ────────────────────────────────────────────────────────
-# We import our own security module so hashes match the app's verify_password().
+
 from app.core.security import hash_password
 
-
-# ── Helpers ─────────────────────────────────────────────────────────────────
 
 def uid(prefix: str = "") -> str:
     """Generate a short unique ID with an optional prefix."""
     return f"{prefix}{uuid.uuid4().hex[:8].upper()}"
 
-
-# ── Table DDL (PostgreSQL) ─────────────────────────────────────────────────
 
 TABLES = """
 -- Existing tables (from comfygo_db.sql, converted to PostgreSQL)
@@ -191,12 +186,10 @@ DROP TABLE IF EXISTS packages CASCADE;
 """
 
 
-# ── Seed data insertion ─────────────────────────────────────────────────────
-
 async def seed(db: AsyncSession) -> None:
     """Insert all seed data with properly hashed passwords."""
 
-    # Pre-generate hashes (password123 for everyone except admin)
+
     user_pass = hash_password("password123")
     admin_pass = hash_password("ComfyGo2026")
 
@@ -204,7 +197,7 @@ async def seed(db: AsyncSession) -> None:
     print(f"  Admin password hash: {admin_pass[:30]}...")
     print()
 
-    # ── Hotels ──────────────────────────────────────────────────────────
+
     hotels = [
         ("H001", "Hotel Grand Sultan", "Sylhet", "Sylhet", "Zindabazar, Sylhet", "5", 12000, None),
         ("H002", "Rose View Hotel", "Sylhet", "Sylhet", "Shahjalal Uposhohor, Sylhet", "4", 8500, None),
@@ -222,7 +215,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": h[0], "b": h[1], "c": h[2], "d": h[3], "e": h[4], "f": h[5], "g": h[6], "h": h[7]} for h in hotels])
     print(f"  ✓ {len(hotels)} hotels inserted")
 
-    # ── Transportation ──────────────────────────────────────────────────
+
     transports = [
         ("T001", "Train", "Dhaka-Sylhet", 450),
         ("T002", "Train", "Dhaka-Sylhet", 500),
@@ -250,7 +243,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": t[0], "b": t[1], "c": t[2], "d": t[3]} for t in transports])
     print(f"  ✓ {len(transports)} transport options inserted")
 
-    # ── Tourist Spots ───────────────────────────────────────────────────
+
     spots = [
         ("SP001", "Lalbagh Fort", "Dhaka", "Dhaka", "A 17th-century Mughal fort in the heart of old Dhaka.", None, "Oct–Mar", 20, 2.0),
         ("SP002", "Ahsan Manzil", "Dhaka", "Dhaka", "The Pink Palace — former residence of the Nawabs of Dhaka.", None, "Oct–Mar", 30, 1.5),
@@ -274,7 +267,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": s[0], "b": s[1], "c": s[2], "d": s[3], "e": s[4], "f": s[5], "g": s[6], "h": s[7], "i": s[8]} for s in spots])
     print(f"  ✓ {len(spots)} tourist spots inserted")
 
-    # ── Users (Tourists) ────────────────────────────────────────────────
+
     users = [
         ("USR001", "rahim@example.com", "Rahim Uddin", "+8801712345678"),
         ("USR002", "nusrat@example.com", "Nusrat Jahan", "+8801812345678"),
@@ -286,7 +279,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": u[0], "b": u[1], "c": u[2], "d": u[3], "e": user_pass} for u in users])
     print(f"  ✓ {len(users)} tourist accounts inserted")
 
-    # ── Guides ──────────────────────────────────────────────────────────
+
     guides = [
         ("NID1001", "Farhan Ahmed", "farhan@example.com", "+8801711111111", "Sylhet", "Sylhet", 2500),
         ("NID1002", "Sabrina Akter", "sabrina@example.com", "+8801811111111", "Dhaka", "Dhaka", 3000),
@@ -298,7 +291,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": g[0], "b": g[1], "c": g[2], "d": g[3], "e": g[4], "f": g[5], "g": g[6], "h": user_pass} for g in guides])
     print(f"  ✓ {len(guides)} guide accounts inserted")
 
-    # ── Managers ────────────────────────────────────────────────────────
+
     managers = [
         ("MGR001", "Aminul Islam", "aminul@example.com", "+8801722222222", "H001"),
         ("MGR002", "Fatima Begum", "fatima@example.com", "+8801822222222", "H004"),
@@ -310,13 +303,13 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": m[0], "b": m[1], "c": m[2], "d": m[3], "e": m[4], "f": user_pass} for m in managers])
     print(f"  ✓ {len(managers)} manager accounts inserted")
 
-    # ── Admin ───────────────────────────────────────────────────────────
+
     await db.execute(text(
         "INSERT INTO admins (admin_id, admin_name, admin_email, password) VALUES (:a,:b,:c,:d)"
     ), {"a": "ADM001", "b": "Super Admin", "c": "admin@gmail.com", "d": admin_pass})
     print("  ✓ 1 admin account inserted")
 
-    # ── Packages ────────────────────────────────────────────────────────
+
     packages = [
         ("PKG001", "Basic", 0, 3, 0, False, False, "3 bookings per month, standard listing, email support"),
         ("PKG002", "Pro", 499, 10, 5, True, False, "10 bookings per month, priority listing, 5% discount, email & chat support"),
@@ -329,7 +322,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": p[0], "b": p[1], "c": p[2], "d": p[3], "e": p[4], "f": p[5], "g": p[6], "h": p[7]} for p in packages])
     print(f"  ✓ {len(packages)} packages inserted")
 
-    # ── Sample Bookings ─────────────────────────────────────────────────
+
     bookings = [
         ("BK00001", "Hotel", "Confirmed", "USR001", date(2026, 8, 15), None, "H001", None),
         ("BK00002", "Guide", "Pending", "USR002", date(2026, 8, 20), "NID1001", None, None),
@@ -341,7 +334,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": b[0], "b": b[1], "c": b[2], "d": b[3], "e": b[4], "f": b[5], "g": b[6], "h": b[7]} for b in bookings])
     print(f"  ✓ {len(bookings)} sample bookings inserted")
 
-    # ── Sample Payments ─────────────────────────────────────────────────
+
     payments = [
         ("PY00001", "BK00001", 12000, "USR001", date(2026, 8, 15), "Card"),
         ("PY00002", "BK00002", 2500, "USR002", date(2026, 8, 20), "Card"),
@@ -353,7 +346,7 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": p[0], "b": p[1], "c": p[2], "d": p[3], "e": p[4], "f": p[5]} for p in payments])
     print(f"  ✓ {len(payments)} sample payments inserted")
 
-    # ── User-Package Subscriptions ──────────────────────────────────────
+
     subs = [
         ("USR001", "PKG002", date(2026, 8, 1), date(2026, 8, 31), "active"),
         ("USR002", "PKG001", date(2026, 8, 1), None, "active"),
@@ -364,8 +357,6 @@ async def seed(db: AsyncSession) -> None:
     ), [{"a": s[0], "b": s[1], "c": s[2], "d": s[3], "e": s[4]} for s in subs])
     print(f"  ✓ {len(subs)} subscriptions inserted")
 
-
-# ── Main ────────────────────────────────────────────────────────────────────
 
 async def main(db_url: str, drop: bool = False) -> None:
     engine = create_async_engine(db_url, echo=False)

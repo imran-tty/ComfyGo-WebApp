@@ -29,7 +29,7 @@ class TestPasswordHashing:
         """Bcrypt should produce different hashes due to random salt."""
         h1 = hash_password("same_password")
         h2 = hash_password("same_password")
-        # They should both verify, but not be identical
+
         assert verify_password("same_password", h1)
         assert verify_password("same_password", h2)
 

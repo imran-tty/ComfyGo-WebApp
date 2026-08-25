@@ -24,7 +24,7 @@ async def login(req: LoginRequest, response: Response, db: AsyncSession = Depend
     if not email or not password:
         raise HTTPException(status_code=400, detail="Please fill in all fields.")
 
-    # Check Users (tourist)
+
     stmt = select(User).where(User.user_email == email).limit(1)
     result = await db.execute(stmt)
     user = result.scalar_one_or_none()
@@ -34,13 +34,13 @@ async def login(req: LoginRequest, response: Response, db: AsyncSession = Depend
             key="access_token",
             value=token,
             httponly=True,
-            secure=False,  # Set True in production with HTTPS
+            secure=False,
             samesite="lax",
             max_age=86400,
         )
         return TokenResponse(access_token=token, role="tourist", user_id=user.user_id, user_name=user.user_name)
 
-    # Check Guide
+
     stmt = select(Guide).where(Guide.guide_email == email).limit(1)
     result = await db.execute(stmt)
     guide = result.scalar_one_or_none()
@@ -56,7 +56,7 @@ async def login(req: LoginRequest, response: Response, db: AsyncSession = Depend
         )
         return TokenResponse(access_token=token, role="guide", user_id=guide.guide_nid, user_name=guide.guide_name)
 
-    # Check Manager
+
     stmt = select(Manager).where(Manager.manager_email == email).limit(1)
     result = await db.execute(stmt)
     manager = result.scalar_one_or_none()
@@ -72,7 +72,7 @@ async def login(req: LoginRequest, response: Response, db: AsyncSession = Depend
         )
         return TokenResponse(access_token=token, role="manager", user_id=manager.manager_id, user_name=manager.manager_name)
 
-    # Check Admin
+
     stmt = select(Admin).where(Admin.admin_email == email).limit(1)
     result = await db.execute(stmt)
     admin = result.scalar_one_or_none()
@@ -101,7 +101,7 @@ async def signup_tourist(req: TouristSignupRequest, response: Response, db: Asyn
     if req.password != req.confirm_password:
         raise HTTPException(status_code=400, detail="Passwords do not match.")
 
-    # Check uniqueness
+
     existing = await db.execute(
         select(User).where(or_(User.user_id == req.user_id, User.user_email == req.user_email)).limit(1)
     )
@@ -202,7 +202,7 @@ async def forgot_password(req: ForgotPasswordRequest, db: AsyncSession = Depends
     if not email:
         raise HTTPException(status_code=400, detail="Please enter your email address.")
 
-    # Check across all tables (matching original UNION query)
+
     user_result = await db.execute(select(User).where(User.user_email == email).limit(1))
     user = user_result.scalar_one_or_none()
     if user:

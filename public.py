@@ -17,7 +17,7 @@ router = APIRouter(prefix="/api/public", tags=["public"])
 @router.get("/destinations")
 async def get_destinations(db: AsyncSession = Depends(get_db)):
     """Get all tourist spots grouped by city, with avg hotel prices, guide rates, and transport costs."""
-    # Get spots
+
     stmt = select(TouristSpot).where(
         TouristSpot.city.in_(["Dhaka", "Sylhet", "Chittagong"])
     ).order_by(TouristSpot.city, TouristSpot.spot_name)
@@ -38,7 +38,7 @@ async def get_destinations(db: AsyncSession = Depends(get_db)):
                 "estimated_hours": float(spot.estimated_hours) if spot.estimated_hours else None,
             })
 
-    # Avg hotel prices
+
     hotel_stmt = (
         select(Hotel.hotel_division, func.avg(Hotel.hotel_price).label("avg_price"))
         .where(Hotel.hotel_division.in_(["Dhaka", "Sylhet", "Chittagong"]))
@@ -47,7 +47,7 @@ async def get_destinations(db: AsyncSession = Depends(get_db)):
     result = await db.execute(hotel_stmt)
     hotel_prices = {row[0]: int(row[1]) for row in result.all()}
 
-    # Avg guide rates
+
     guide_stmt = (
         select(Guide.guide_division, func.avg(Guide.guide_rate).label("avg_rate"))
         .where(
@@ -59,7 +59,7 @@ async def get_destinations(db: AsyncSession = Depends(get_db)):
     result = await db.execute(guide_stmt)
     guide_rates = {row[0]: int(row[1]) for row in result.all()}
 
-    # Transport costs (average fare by route for each city from Dhaka)
+
     transport_modes = {}
     for city in ["Sylhet", "Chittagong"]:
         route = f"Dhaka-{city}"

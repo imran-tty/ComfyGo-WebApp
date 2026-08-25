@@ -25,9 +25,6 @@ from app.schemas.schemas import (
 )
 
 
-# ─── Login ──────────────────────────────────────────
-
-
 class TestLoginRequest:
     def test_valid(self):
         req = LoginRequest(email="a@b.com", password="pass")
@@ -46,9 +43,6 @@ class TestAdminLoginRequest:
     def test_valid(self):
         req = AdminLoginRequest(email="admin@test.com", password="admin123")
         assert req.email == "admin@test.com"
-
-
-# ─── Tourist Signup ─────────────────────────────────
 
 
 class TestTouristSignupRequest:
@@ -79,9 +73,6 @@ class TestTouristSignupRequest:
             TouristSignupRequest(user_id="USR001")
 
 
-# ─── Guide Signup ────────────────────────────────────
-
-
 class TestGuideSignupRequest:
     def test_valid(self):
         req = GuideSignupRequest(
@@ -97,9 +88,6 @@ class TestGuideSignupRequest:
         assert req.guide_nid == "GID001"
 
 
-# ─── Manager Signup ──────────────────────────────────
-
-
 class TestManagerSignupRequest:
     def test_valid(self):
         req = ManagerSignupRequest(
@@ -112,9 +100,6 @@ class TestManagerSignupRequest:
             confirm_password="pass123",
         )
         assert req.manager_id == "MGR001"
-
-
-# ─── Profile Updates ────────────────────────────────
 
 
 class TestTouristProfileUpdate:
@@ -172,9 +157,6 @@ class TestHotelUpdate:
         assert req.hotel_price == 15000
 
 
-# ─── Bookings ───────────────────────────────────────
-
-
 class TestTransportBookingRequest:
     def test_valid(self):
         req = TransportBookingRequest(transport_id="TR001", travel_date="2026-09-01")
@@ -199,9 +181,6 @@ class TestBookingApprovalRequest:
         assert req.booking_id == "BK001"
 
 
-# ─── Contact ────────────────────────────────────────
-
-
 class TestContactMessageRequest:
     def test_valid(self):
         req = ContactMessageRequest(
@@ -222,25 +201,16 @@ class TestContactMessageRequest:
             )
 
 
-# ─── Password Reset ─────────────────────────────────
-
-
 class TestPasswordResetRequest:
     def test_valid(self):
         req = PasswordResetRequest(new_password="new123", confirm_password="new123")
         assert req.new_password == "new123"
 
 
-# ─── Forgot Password ────────────────────────────────
-
-
 class TestForgotPasswordRequest:
     def test_valid(self):
         req = ForgotPasswordRequest(email="user@test.com")
         assert req.email == "user@test.com"
-
-
-# ─── Packages ───────────────────────────────────────
 
 
 class TestPackageCreate:

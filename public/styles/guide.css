@@ -194,7 +194,7 @@ body {
   color: #1b3a2a;
 }
 
-/* Card layout for bookings */
+
 .g_booking_cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -329,7 +329,7 @@ body {
   padding: 16px 0;
 }
 
-/* Profile form card */
+
 .g_profile_grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

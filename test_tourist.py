@@ -46,7 +46,7 @@ class TestTouristProfile:
             headers=auth_header(auth_token_tourist),
             json={"user_name": "", "user_email": "", "user_phone": ""},
         )
-        # Empty email fails Pydantic validation (422) or business logic (400)
+
         assert resp.status_code in (400, 422)
 
 

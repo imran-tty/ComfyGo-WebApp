@@ -56,7 +56,7 @@ class TestGuideProfile:
                 "guide_rate": 0,
             },
         )
-        # Empty email fails Pydantic validation (422) or business logic (400)
+
         assert resp.status_code in (400, 422)
 
     @pytest.mark.asyncio

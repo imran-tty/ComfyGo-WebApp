@@ -31,8 +31,7 @@ def main():
     conn = pymysql.connect(host=DB_HOST, port=DB_PORT, user=DB_USER, password=DB_PASS, database=DB_NAME, charset="utf8mb4")
     cur = conn.cursor()
 
-    # ── Drop existing tables ─────────────────────────────────────────────
-    # Disable foreign key checks for clean drop
+
     cur.execute("SET FOREIGN_KEY_CHECKS = 0")
     drop_order = [
         "user_packages", "payment", "booking", "contact_messages",
@@ -44,7 +43,7 @@ def main():
     cur.execute("SET FOREIGN_KEY_CHECKS = 1")
     print("[OK] Tables dropped")
 
-    # ── Create tables ────────────────────────────────────────────────────
+
     cur.execute("""
         CREATE TABLE users (
             user_id VARCHAR(100) PRIMARY KEY,
@@ -210,11 +209,11 @@ def main():
     """)
     print("[OK] All tables created")
 
-    # ── Hash passwords ───────────────────────────────────────────────────
+
     user_pass = pwd_context.hash("password123")
     admin_pass = pwd_context.hash("ComfyGo2026")
 
-    # ── Hotels (Bangladesh cities) ───────────────────────────────────────
+
     hotels = [
         ("H001", "Hotel Grand Sultan", "Sylhet", "Sylhet", "Zindabazar, Sylhet", "5", 12000, "Luxury 5-star resort with panoramic valley views and world-class amenities."),
         ("H002", "Rose View Hotel", "Sylhet", "Sylhet", "Shahjalal Uposhohor, Sylhet", "4", 8500, "Modern hotel in the heart of Sylhet with comfortable rooms and garden views."),
@@ -232,7 +231,7 @@ def main():
     )
     print(f"  [OK] {len(hotels)} hotels inserted")
 
-    # ── Transportation (Bangladesh routes) ───────────────────────────────
+
     transports = [
         ("T001", "Train", "Dhaka-Sylhet", 450),
         ("T002", "Train", "Dhaka-Sylhet", 500),
@@ -260,7 +259,7 @@ def main():
     )
     print(f"  [OK] {len(transports)} transport options inserted")
 
-    # ── Tourist Spots (Bangladesh) ──────────────────────────────────────
+
     spots = [
         ("SP001", "Lalbagh Fort", "Dhaka", "Dhaka", "A 17th-century Mughal fort in the heart of old Dhaka.", None, "Oct-Mar", 20, 2.0),
         ("SP002", "Ahsan Manzil", "Dhaka", "Dhaka", "The Pink Palace — former residence of the Nawabs of Dhaka.", None, "Oct-Mar", 30, 1.5),
@@ -284,7 +283,7 @@ def main():
     )
     print(f"  [OK] {len(spots)} tourist spots inserted")
 
-    # ── Users (Tourists) ────────────────────────────────────────────────
+
     users = [
         ("USR001", "rahim@example.com", "Rahim Uddin", "+8801712345678"),
         ("USR002", "nusrat@example.com", "Nusrat Jahan", "+8801812345678"),
@@ -296,7 +295,7 @@ def main():
     )
     print(f"  [OK] {len(users)} tourist accounts inserted")
 
-    # ── Guides (Bangladesh cities) ──────────────────────────────────────
+
     guides = [
         ("NID1001", "Farhan Ahmed", "farhan@example.com", "+8801711111111", "Sylhet", "Sylhet", 2500),
         ("NID1002", "Sabrina Akter", "sabrina@example.com", "+8801811111111", "Dhaka", "Dhaka", 3000),
@@ -308,7 +307,7 @@ def main():
     )
     print(f"  [OK] {len(guides)} guide accounts inserted")
 
-    # ── Managers ────────────────────────────────────────────────────────
+
     managers = [
         ("MGR001", "Aminul Islam", "aminul@example.com", "+8801722222222", "H001"),
         ("MGR002", "Fatima Begum", "fatima@example.com", "+8801822222222", "H004"),
@@ -320,14 +319,14 @@ def main():
     )
     print(f"  [OK] {len(managers)} manager accounts inserted")
 
-    # ── Admin ───────────────────────────────────────────────────────────
+
     cur.execute(
         "INSERT INTO admins (admin_id, admin_name, admin_email, password) VALUES (%s,%s,%s,%s)",
         ("ADM001", "Super Admin", "admin@gmail.com", admin_pass)
     )
     print("  [OK] 1 admin account inserted")
 
-    # ── Packages ────────────────────────────────────────────────────────
+
     packages = [
         ("PKG001", "Explorer", 0, 3, 2, 1, 1, 0, False, False, False, False, False, "Basic booking access, email support"),
         ("PKG002", "Traveller", 2500, 10, 5, 3, 2, 10, True, False, True, False, False, "Priority booking, free breakfast, 10% discount"),
@@ -339,7 +338,7 @@ def main():
     )
     print(f"  [OK] {len(packages)} packages inserted")
 
-    # ── Sample Bookings ─────────────────────────────────────────────────
+
     bookings = [
         ("BK00001", "Hotel", "Confirmed", "USR001", date(2026, 8, 15), None, "H001", None),
         ("BK00002", "Guide", "Pending", "USR002", date(2026, 8, 20), "NID1001", None, None),
@@ -351,7 +350,7 @@ def main():
     )
     print(f"  [OK] {len(bookings)} sample bookings inserted")
 
-    # ── Sample Payments ─────────────────────────────────────────────────
+
     payments = [
         ("PY00001", "BK00001", 12000, "USR001", date(2026, 8, 15), "Card"),
         ("PY00002", "BK00002", 2500, "USR002", date(2026, 8, 20), "Card"),
@@ -363,7 +362,7 @@ def main():
     )
     print(f"  [OK] {len(payments)} sample payments inserted")
 
-    # ── User-Package Subscriptions ──────────────────────────────────────
+
     subs = [
         ("USR001", "PKG002", date(2026, 8, 1), date(2026, 8, 31), "active"),
         ("USR002", "PKG001", date(2026, 8, 1), None, "active"),

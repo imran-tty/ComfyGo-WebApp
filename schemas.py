@@ -4,8 +4,6 @@ from typing import Optional, List
 from pydantic import BaseModel, EmailStr
 
 
-# ─── Auth ───────────────────────────────────────────
-
 class LoginRequest(BaseModel):
     email: str
     password: str
@@ -24,12 +22,10 @@ class ForgotPasswordRequest(BaseModel):
 
 
 class ResetPasswordRequest(BaseModel):
-    token: str  # verification token sent to email
+    token: str
     new_password: str
     confirm_password: str
 
-
-# ─── Tourist Signup ─────────────────────────────────
 
 class TouristSignupRequest(BaseModel):
     user_id: str
@@ -60,8 +56,6 @@ class ManagerSignupRequest(BaseModel):
     password: str
     confirm_password: str
 
-
-# ─── Profile Updates ────────────────────────────────
 
 class TouristProfileUpdate(BaseModel):
     user_name: str
@@ -94,28 +88,24 @@ class HotelUpdate(BaseModel):
     hotel_description: str
 
 
-# ─── Bookings ───────────────────────────────────────
-
 class TransportBookingRequest(BaseModel):
     transport_id: str
-    travel_date: str  # ISO date string
+    travel_date: str
 
 
 class HotelBookingRequest(BaseModel):
     hotel_reg: str
-    checkin: str  # ISO date string
+    checkin: str
 
 
 class GuideBookingRequest(BaseModel):
     guide_nid: str
-    guide_date: str  # ISO date string
+    guide_date: str
 
 
 class BookingApprovalRequest(BaseModel):
     booking_id: str
 
-
-# ─── Contact ────────────────────────────────────────
 
 class ContactMessageRequest(BaseModel):
     name: str
@@ -124,14 +114,10 @@ class ContactMessageRequest(BaseModel):
     message: str
 
 
-# ─── Password Reset ─────────────────────────────────
-
 class PasswordResetRequest(BaseModel):
     new_password: str
     confirm_password: str
 
-
-# ─── Response Models ────────────────────────────────
 
 class UserResponse(BaseModel):
     user_id: str
@@ -254,8 +240,6 @@ class ContactMessageResponse(BaseModel):
         from_attributes = True
 
 
-# ─── Admin ──────────────────────────────────────────
-
 class AdminLoginRequest(BaseModel):
     email: str
     password: str
@@ -297,8 +281,6 @@ class AdminManagerResponse(BaseModel):
     class Config:
         from_attributes = True
 
-
-# ─── Packages ───────────────────────────────────────
 
 class PackageResponse(BaseModel):
     package_id: str
@@ -372,7 +354,6 @@ class UserPackageCreate(BaseModel):
     end_date: Optional[date] = None
 
 
-# ─── Admin CRUD Schemas ────────────────────────────
 class AdminUserCreate(BaseModel):
     user_id: str
     user_name: str
@@ -478,7 +459,6 @@ class AdminSpotUpdate(BaseModel):
     estimated_hours: Optional[float] = None
 
 
-# ─── Tourist Package Schemas ────────────────────────
 class PurchasePackageRequest(BaseModel):
     package_id: str
 
@@ -510,19 +490,17 @@ class ActivePackageResponse(BaseModel):
     bookings_remaining: int = 0
 
 
-# ─── Chart Data ─────────────────────────────────────
 class ChartDataResponse(BaseModel):
-    booking_types: dict  # {"Hotel": 5, "Transport": 3, ...}
-    booking_status: dict  # {"Pending": 2, "Confirmed": 6, ...}
-    payments_by_month: dict  # {"2024-01": 5000, ...}
-    top_revenue_sources: dict  # {"Hotel": 50000, ...}
-    package_popularity: dict  # {"Basic": 10, "Standard": 5, ...}
-    users_by_role: dict  # {"tourist": 20, "guide": 5, ...}
-    division_bookings: dict  # {"Dhaka": 10, "Sylhet": 5, ...}
-    recent_activity: list  # [{type, message, date}, ...]
+    booking_types: dict
+    booking_status: dict
+    payments_by_month: dict
+    top_revenue_sources: dict
+    package_popularity: dict
+    users_by_role: dict
+    division_bookings: dict
+    recent_activity: list
 
 
-# ─── Destinations ───────────────────────────────────
 class CityDataResponse(BaseModel):
     city: str
     spots: List[TouristSpotResponse]

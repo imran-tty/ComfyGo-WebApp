@@ -1,4 +1,4 @@
-/* ── manager.css ── mirrors the structure of guide.css ── */
+
 
 *,
 *::before,
@@ -14,14 +14,14 @@ body {
     color: #1a1a1a;
 }
 
-/* ─── PAGE WRAPPER ─── */
+
 #manager_page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* ─── TOP BAR ─── */
+
 #manager_topbar {
     display: flex;
     align-items: flex-start;
@@ -73,7 +73,7 @@ body {
     background: #9b7f4e;
 }
 
-/* ─── ALERTS ─── */
+
 .m_alert {
     margin: 1.2rem 3rem 0;
     padding: 0.85rem 1.2rem;
@@ -94,14 +94,14 @@ body {
     border: 1px solid #b7e4c7;
 }
 
-/* ─── BODY LAYOUT ─── */
+
 #manager_body {
     display: flex;
     flex: 1;
     gap: 0;
 }
 
-/* ─── SIDEBAR ─── */
+
 #manager_sidebar {
     width: 220px;
     flex-shrink: 0;
@@ -137,7 +137,7 @@ body {
     color: #9b7f4e;
 }
 
-/* ─── MAIN CONTENT ─── */
+
 #manager_content {
     flex: 1;
     padding: 2.5rem 3rem;
@@ -147,7 +147,7 @@ body {
     overflow-y: auto;
 }
 
-/* ─── SECTIONS ─── */
+
 .m_section {
     background: #fff;
     border-radius: 16px;
@@ -177,7 +177,7 @@ body {
     margin-bottom: 1rem;
 }
 
-/* ─── INFO GRID ─── */
+
 .m_info_grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -207,7 +207,7 @@ body {
     word-break: break-word;
 }
 
-/* ─── TABLE ─── */
+
 .m_table_wrap {
     overflow-x: auto;
     border-radius: 12px;
@@ -260,14 +260,14 @@ body {
     text-transform: capitalize;
 }
 
-/* ─── EMPTY STATE ─── */
+
 .m_empty {
     font-size: 0.92rem;
     color: #aaa;
     padding: 1rem 0;
 }
 
-/* ─── FORM FIELDS ─── */
+
 .m_field {
     display: flex;
     flex-direction: column;
@@ -301,7 +301,7 @@ body {
     background: #fff;
 }
 
-/* ─── SUBMIT BUTTON ─── */
+
 .m_btn_primary {
     margin-top: 0.5rem;
     padding: 0.75rem 2rem;
@@ -320,7 +320,7 @@ body {
     background: #9b7f4e;
 }
 
-/* ─── RESPONSIVE ─── */
+
 @media (max-width: 900px) {
     #manager_topbar {
         padding: 1.8rem 1.5rem 1.4rem;
@@ -334,7 +334,7 @@ body {
         display: none;
     }
 
-    /* collapse on mobile */
+    
 }
 
 @media (max-width: 600px) {
@@ -348,7 +348,7 @@ body {
     }
 }
 
-/* ─── APPROVAL BUTTONS ─── */
+
 .m_btn_approve {
     padding: 0.45rem 1rem;
     background: #1e8449;

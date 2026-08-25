@@ -56,7 +56,7 @@ async def update_profile(
     if not all([req.manager_name, req.manager_email, req.manager_mobile]):
         raise HTTPException(status_code=400, detail="Please fill in all fields.")
 
-    # Check email uniqueness
+
     existing = await db.execute(
         select(Manager).where(
             Manager.manager_email == req.manager_email,
@@ -90,7 +90,7 @@ async def update_hotel(
     if not all([req.hotel_name, req.hotel_division, req.hotel_district, req.hotel_location]):
         raise HTTPException(status_code=400, detail="Please fill in all hotel fields.")
 
-    # Get manager's hotel reg number
+
     mgr_stmt = select(Manager).where(Manager.manager_id == user["id"])
     mgr_result = await db.execute(mgr_stmt)
     mgr = mgr_result.scalar_one_or_none()

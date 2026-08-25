@@ -46,7 +46,7 @@ class TestManagerProfile:
             headers=auth_header(auth_token_manager),
             json={"manager_name": "", "manager_email": "", "manager_mobile": ""},
         )
-        # Empty email fails Pydantic validation (422) or business logic (400)
+
         assert resp.status_code in (400, 422)
 
     @pytest.mark.asyncio

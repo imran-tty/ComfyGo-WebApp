@@ -264,8 +264,6 @@ async def book_guide(
     return {"message": f"Guide booked! Booking ID: {booking_id}", "booking_id": booking_id}
 
 
-# ─── Package Endpoints ──────────────────────────────
-
 @router.get("/packages")
 async def list_packages(db: AsyncSession = Depends(get_db)):
     """List all available packages."""
@@ -311,7 +309,7 @@ async def _get_active_package_for_user(user_id: str, db: AsyncSession):
 
     up, pkg = row
 
-    # Count bookings per type (active only)
+
     active_statuses = ["Pending", "Confirmed"]
 
     transport_used = (
@@ -400,7 +398,7 @@ async def purchase_package(
     if not pkg:
         raise HTTPException(status_code=404, detail="Package not found.")
 
-    # Deactivate old subscription
+
     old_stmt = (
         select(UserPackage)
         .where(UserPackage.user_id == user["id"])

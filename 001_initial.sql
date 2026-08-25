@@ -1,11 +1,4 @@
--- =============================================================================
--- ComfyGo PostgreSQL Migration
--- Converted from MySQL (comfygo_db.sql) + new admin, packages, subscriptions
--- =============================================================================
 
--- ─────────────────────────────────────────────
--- EXISTING TABLES (MySQL → PostgreSQL)
--- ─────────────────────────────────────────────
 
 CREATE TABLE users (
     user_id       VARCHAR(100) PRIMARY KEY,
@@ -108,11 +101,7 @@ CREATE TABLE tourist_spots (
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ─────────────────────────────────────────────
--- NEW TABLES
--- ─────────────────────────────────────────────
 
--- Admins table (separate from other roles)
 CREATE TABLE admins (
     admin_id    VARCHAR(100) PRIMARY KEY,
     admin_name  VARCHAR(100) NOT NULL,
@@ -121,7 +110,6 @@ CREATE TABLE admins (
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Subscription packages
 CREATE TABLE packages (
     package_id    VARCHAR(100) PRIMARY KEY,
     package_name  VARCHAR(50) NOT NULL UNIQUE,
@@ -134,7 +122,6 @@ CREATE TABLE packages (
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- User-package assignments
 CREATE TABLE user_packages (
     id            SERIAL PRIMARY KEY,
     user_id       VARCHAR(100) NOT NULL,
@@ -147,11 +134,7 @@ CREATE TABLE user_packages (
     FOREIGN KEY (package_id) REFERENCES packages(package_id)
 );
 
--- ─────────────────────────────────────────────
--- SEED DATA
--- ─────────────────────────────────────────────
 
--- Hotels
 INSERT INTO hotels (hotel_registration_number, hotel_name, hotel_division, hotel_district, hotel_location, hotel_rating, hotel_price) VALUES
 ('H001','Hotel Grand Sultan','Sylhet','Sylhet','Zindabazar, Sylhet','5',12000),
 ('H002','Rose View Hotel','Sylhet','Sylhet','Shahjalal Uposhohor, Sylhet','4',8500),
@@ -163,7 +146,6 @@ INSERT INTO hotels (hotel_registration_number, hotel_name, hotel_division, hotel
 ('H008','The Peninsula Chittagong','Chittagong','Chittagong','GEC Circle, Chattogram','5',11000),
 ('H009','Radisson Blu Chattogram Bay View','Chittagong','Chittagong','Karnaphuli, Chattogram','5',16000);
 
--- Transportation
 INSERT INTO transportation (transport_id, transport_type, transport_route, transport_fare) VALUES
 ('T001','Train','Dhaka-Sylhet',450),
 ('T002','Train','Dhaka-Sylhet',500),
@@ -185,7 +167,6 @@ INSERT INTO transportation (transport_id, transport_type, transport_route, trans
 ('L002','Launch','Dhaka-Mongla',900),
 ('L003','Launch','Barisal-Chittagong',1200);
 
--- Tourist Spots
 INSERT INTO tourist_spots (spot_id, spot_name, city, division, description, best_season, entry_fee, estimated_hours) VALUES
 ('SP001','Lalbagh Fort','Dhaka','Dhaka','A 17th-century Mughal fort in the heart of old Dhaka.','Oct–Mar',20,2.0),
 ('SP002','Ahsan Manzil','Dhaka','Dhaka','The Pink Palace — former residence of the Nawabs of Dhaka.','Oct–Mar',30,1.5),
@@ -203,48 +184,40 @@ INSERT INTO tourist_spots (spot_id, spot_name, city, division, description, best
 ('SP014','Chandranath Hill','Chittagong','Chittagong','Sacred hilltop temple with panoramic views over Sitakunda.','Nov–Feb',0,3.0),
 ('SP015','Kaptai Lake','Chittagong','Chittagong','The largest man-made lake in Bangladesh in the hill tracts.','Nov–Mar',0,4.0);
 
--- Package tiers
 INSERT INTO packages (package_id, package_name, price, booking_limit, discount_pct, priority, exclusive, features) VALUES
 ('PKG001','Basic',0,3,0,FALSE,FALSE,'3 bookings per month, standard listing, email support'),
 ('PKG002','Pro',499,10,5,TRUE,FALSE,'10 bookings per month, priority listing, 5% discount, email & chat support'),
 ('PKG003','Premium',999,-1,10,TRUE,FALSE,'Unlimited bookings, priority listing, 10% discount, 24/7 support'),
 ('PKG004','Ultimate',1999,-1,20,TRUE,TRUE,'Unlimited bookings, exclusive deals, 20% discount, 24/7 priority support, free cancellation');
 
--- Sample users (passwords are bcrypt hashes of "password123")
 INSERT INTO users (user_id, user_email, user_name, user_phone, password) VALUES
 ('USR001','rahim@example.com','Rahim Uddin','+8801712345678','$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.'),
 ('USR002','nusrat@example.com','Nusrat Jahan','+8801812345678','$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.'),
 ('USR003','karim@example.com','Karim Hassan','+8801912345678','$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.');
 
--- Sample guides
 INSERT INTO guide (guide_nid, guide_name, guide_email, guide_mobile, guide_division, guide_district, guide_rate, password) VALUES
 ('NID1001','Farhan Ahmed','farhan@example.com','+8801711111111','Sylhet','Sylhet',2500,'$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.'),
 ('NID1002','Sabrina Akter','sabrina@example.com','+8801811111111','Dhaka','Dhaka',3000,'$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.'),
 ('NID1003','Tanvir Hossain','tanvir@example.com','+8801911111111','Chittagong','Chittagong',2800,'$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.');
 
--- Sample managers
 INSERT INTO manager (manager_id, manager_name, manager_email, manager_mobile, hotel_registration_number, password) VALUES
 ('MGR001','Aminul Islam','aminul@example.com','+8801722222222','H001','$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.'),
 ('MGR002','Fatima Begum','fatima@example.com','+8801822222222','H004','$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.'),
 ('MGR003','Rafiq Chowdhury','rafiq@example.com','+8801922222222','H007','$2b$12$JzaiRvK1oZz3IzTpnyDAF.MM64mSYvLjcRpUyN9RD6CEgd3OMMTQ.');
 
--- Sample admin (password: admin123)
 INSERT INTO admins (admin_id, admin_name, admin_email, password) VALUES
 ('ADM001','Super Admin','admin@comfygo.com','$2b$12$kY1QaAVdvcshcOxHwpXCyu6wpSwkjgo5JesB.ifjGB9ZChpWVTQf.');
 
--- Sample bookings
 INSERT INTO booking (booking_id, booking_type, booking_confirmation, user_id, booking_date, hotel_registration_number) VALUES
 ('BK00001','Hotel','Confirmed','USR001','2026-08-15','H001'),
 ('BK00002','Guide','Pending','USR002','2026-08-20','NID1001'),
 ('BK00003','Transport','Pending','USR003','2026-08-25','T001');
 
--- Sample payments
 INSERT INTO payment (payment_id, booking_id, price, user_id, payment_date, payment_method) VALUES
 ('PY00001','BK00001',12000,'USR001','2026-08-15','Card'),
 ('PY00002','BK00002',2500,'USR002','2026-08-20','Card'),
 ('PY00003','BK00003',450,'USR003','2026-08-25','Card');
 
--- Assign packages to sample users
 INSERT INTO user_packages (user_id, package_id, start_date, end_date, payment_status) VALUES
 ('USR001','PKG002','2026-08-01','2026-08-31','active'),
 ('USR002','PKG001','2026-08-01',NULL,'active');

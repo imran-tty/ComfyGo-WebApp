@@ -10,7 +10,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers
+
 app.include_router(auth.router)
 app.include_router(tourist.router)
 app.include_router(guide.router)

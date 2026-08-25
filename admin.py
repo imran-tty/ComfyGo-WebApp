@@ -26,8 +26,6 @@ from app.schemas.schemas import (
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
 
-# ─── Auth ───────────────────────────────────────────
-
 @router.post("/login")
 async def admin_login(req: AdminLoginRequest, response: Response, db: AsyncSession = Depends(get_db)):
     email = req.email.strip()
@@ -51,8 +49,6 @@ async def admin_login(req: AdminLoginRequest, response: Response, db: AsyncSessi
         "user_name": admin.admin_name,
     }
 
-
-# ─── Dashboard Stats ────────────────────────────────
 
 @router.get("/stats")
 async def get_stats(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
@@ -85,23 +81,21 @@ async def get_stats(user: dict = Depends(require_admin), db: AsyncSession = Depe
     }
 
 
-# ─── Chart Data ─────────────────────────────────────
-
 @router.get("/charts")
 async def get_chart_data(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
     """Rich chart data for admin dashboard."""
 
-    # Booking types breakdown (pie chart)
+
     bt_stmt = select(Booking.booking_type, func.count(Booking.booking_id)).group_by(Booking.booking_type)
     bt_result = await db.execute(bt_stmt)
     booking_types = {row[0] or "Unknown": row[1] for row in bt_result.all()}
 
-    # Booking status breakdown (pie chart)
+
     bs_stmt = select(Booking.booking_confirmation, func.count(Booking.booking_id)).group_by(Booking.booking_confirmation)
     bs_result = await db.execute(bs_stmt)
     booking_status = {row[0] or "Unknown": row[1] for row in bs_result.all()}
 
-    # Revenue by month (bar chart)
+
     rm_stmt = (
         select(
             func.to_char(Payment.payment_date, 'YYYY-MM').label("month"),
@@ -114,7 +108,7 @@ async def get_chart_data(user: dict = Depends(require_admin), db: AsyncSession =
     rm_result = await db.execute(rm_stmt)
     payments_by_month = {row[0]: row[1] for row in rm_result.all()}
 
-    # Revenue by booking type (bar chart)
+
     tr_stmt = (
         select(Booking.booking_type, func.sum(Payment.price))
         .join(Payment, Booking.booking_id == Payment.booking_id)
@@ -123,7 +117,7 @@ async def get_chart_data(user: dict = Depends(require_admin), db: AsyncSession =
     tr_result = await db.execute(tr_stmt)
     top_revenue = {row[0] or "Unknown": row[1] for row in tr_result.all()}
 
-    # Package popularity (bar chart)
+
     pp_stmt = (
         select(Package.package_name, func.count(UserPackage.id))
         .outerjoin(UserPackage, Package.package_id == UserPackage.package_id)
@@ -132,7 +126,7 @@ async def get_chart_data(user: dict = Depends(require_admin), db: AsyncSession =
     pp_result = await db.execute(pp_stmt)
     package_pop = {row[0]: row[1] for row in pp_result.all()}
 
-    # Division breakdown of bookings (bar chart)
+
     db_stmt = (
         select(Hotel.hotel_division, func.count(Booking.booking_id))
         .join(Booking, Hotel.hotel_registration_number == Booking.hotel_registration_number)
@@ -141,7 +135,7 @@ async def get_chart_data(user: dict = Depends(require_admin), db: AsyncSession =
     db_result = await db.execute(db_stmt)
     division_bookings = {row[0] or "Unknown": row[1] for row in db_result.all()}
 
-    # Recent activity (last 10 bookings)
+
     ra_stmt = (
         select(Booking, User.user_name)
         .outerjoin(User, Booking.user_id == User.user_id)
@@ -169,8 +163,6 @@ async def get_chart_data(user: dict = Depends(require_admin), db: AsyncSession =
         "recent_activity": recent_activity,
     }
 
-
-# ─── Users CRUD ─────────────────────────────────────
 
 @router.get("/users")
 async def list_users(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
@@ -221,8 +213,6 @@ async def delete_user(user_id: str, user: dict = Depends(require_admin), db: Asy
     return {"message": f"User {user_id} deleted."}
 
 
-# ─── Guides CRUD ────────────────────────────────────
-
 @router.get("/guides")
 async def list_guides(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Guide).order_by(Guide.guide_nid))
@@ -272,8 +262,6 @@ async def delete_guide(guide_nid: str, user: dict = Depends(require_admin), db: 
     return {"message": f"Guide {guide_nid} deleted."}
 
 
-# ─── Managers CRUD ──────────────────────────────────
-
 @router.get("/managers")
 async def list_managers(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Manager).order_by(Manager.manager_id))
@@ -320,8 +308,6 @@ async def delete_manager(manager_id: str, user: dict = Depends(require_admin), d
     await db.delete(m)
     return {"message": f"Manager {manager_id} deleted."}
 
-
-# ─── Hotels CRUD ────────────────────────────────────
 
 @router.get("/hotels")
 async def list_hotels(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
@@ -372,8 +358,6 @@ async def delete_hotel(hotel_reg: str, user: dict = Depends(require_admin), db: 
     return {"message": f"Hotel {hotel_reg} deleted."}
 
 
-# ─── Transportation CRUD ────────────────────────────
-
 @router.get("/transports")
 async def list_transports(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Transportation).order_by(Transportation.transport_id))
@@ -419,8 +403,6 @@ async def delete_transport(transport_id: str, user: dict = Depends(require_admin
     return {"message": f"Transport {transport_id} deleted."}
 
 
-# ─── Bookings CRUD ──────────────────────────────────
-
 @router.get("/bookings")
 async def list_bookings(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
     stmt = (
@@ -460,8 +442,6 @@ async def void_booking(booking_id: str, user: dict = Depends(require_admin), db:
     return {"message": f"Booking {booking_id} has been voided."}
 
 
-# ─── Payments CRUD ──────────────────────────────────
-
 @router.get("/payments")
 async def list_payments(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Payment).order_by(desc(Payment.created_at)))
@@ -478,8 +458,6 @@ async def refund_payment(payment_id: str, user: dict = Depends(require_admin), d
     p.payment_method = "Refunded"
     return {"message": f"Payment {payment_id} has been refunded."}
 
-
-# ─── Tourist Spots CRUD ─────────────────────────────
 
 @router.get("/spots")
 async def list_spots(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
@@ -530,8 +508,6 @@ async def delete_spot(spot_id: str, user: dict = Depends(require_admin), db: Asy
     return {"message": f"Spot {spot_id} deleted."}
 
 
-# ─── Contact Messages ───────────────────────────────
-
 @router.get("/messages")
 async def list_messages(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(ContactMessage).order_by(desc(ContactMessage.submitted_at)))
@@ -548,8 +524,6 @@ async def delete_message(message_id: str, user: dict = Depends(require_admin), d
     await db.delete(m)
     return {"message": f"Message {message_id} deleted."}
 
-
-# ─── Packages CRUD ──────────────────────────────────
 
 @router.get("/packages")
 async def list_packages(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):
@@ -608,8 +582,6 @@ async def delete_package(package_id: str, user: dict = Depends(require_admin), d
     await db.delete(pkg)
     return {"message": f"Package {package_id} deleted."}
 
-
-# ─── User Packages / Subscriptions ─────────────────
 
 @router.get("/subscriptions")
 async def list_subscriptions(user: dict = Depends(require_admin), db: AsyncSession = Depends(get_db)):

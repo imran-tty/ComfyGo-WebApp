@@ -24,7 +24,7 @@ class TestDestinations:
         resp = await client.get("/api/public/destinations")
         assert resp.status_code == 200
         data = resp.json()
-        # The spot should appear under Sylhet
+
         sylhet_spots = data["city_spots"].get("Sylhet", [])
         assert len(sylhet_spots) >= 1
         assert sylhet_spots[0]["spot_name"] == "Test Spot"
@@ -60,7 +60,7 @@ class TestContactSubmit:
             "email": "not-email",
             "message": "This is a valid message with enough length.",
         })
-        assert resp.status_code == 422  # Pydantic validation error
+        assert resp.status_code == 422
 
 
 class TestPublicHotels:
